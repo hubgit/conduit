@@ -53,5 +53,14 @@ class DOI extends Handler {
 //$_GET['id'] = '10.1126/science.169.3946.635';
 //$_SERVER['HTTP_ACCEPT'] = 'application/pdf';
 
-$handler = new DOI($_GET['id']);
-$handler->handle();
+if ($_GET['id']) {
+	$handler = new DOI();
+	$handler->handle();
+	exit();
+}
+
+?>
+
+<form>
+	<label>DOI: <input type="text" name="id"></label>
+</form>
