@@ -1,0 +1,8 @@
+<phpunit
+   colors="true"
+   stopOnError="false"
+   stopOnFailure="false"
+   stopOnIncomplete="false"
+   stopOnSkipped="false"
+   verbose="true">
+</phpunit>
