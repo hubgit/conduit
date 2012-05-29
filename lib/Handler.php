@@ -11,9 +11,8 @@ class Handler {
 
 	protected $formats = array();
 
-	function __construct($id) {
-		if (!$id) exit('No ID provided'); // 400
-		$this->id = $id;
+	function __construct() {
+		$this->id = $_GET['id'];
 	}
 
 	function handle() {
@@ -25,15 +24,15 @@ class Handler {
 		$handler = array($this, $this->formats[$this->format]);
 		if (!is_callable($handler)) exit('No acceptable output format'); // 406
 
-		call_user_func($handler);
 		header('Content-Type: ' . $this->format);
+		call_user_func($handler);
 
 		ob_end_flush();
 	}
 
 	function redirect($url, $code = 301) {
-		header('Location: ' . $url, $code);
-		header('Content-Type: text/plain');
+		header('Location: ' . $url, true, $code);
+		header('Content-Type: text/plain', true);
 		print $url;
 	}
 }

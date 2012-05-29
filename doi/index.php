@@ -23,11 +23,11 @@ class DOI extends Handler {
 	}
 
 	/**
-	 * Output HTML for a DOI from CrossRef
+	 * Redirect to an item via CrossRef
 	 */
 	function crossRefRedirect() {
 		$http = new HTTP;
-		$http->get('http://dx.doi.org/' . $this->id, array(), array('Accept: text/html'), array(CURLOPT_RETURNTRANSFER => false));
+		$this->redirect('http://dx.doi.org/' . $this->id, 307);
 	}
 
 	/**
@@ -43,10 +43,10 @@ class DOI extends Handler {
 		$xpath = new \DOMXPath($dom);
 
 		$nodes = $xpath->query("//link[@rel='alternate'][@type='application/pdf'][@href]");
-		if ($nodes->length) return $this->redirect($nodes->item(0)->getAttribute('href'));
+		if ($nodes->length) return $this->redirect($nodes->item(0)->getAttribute('href'), 303);
 
 		$nodes = $xpath->query("//meta[@name='citation_pdf_url'][@content]");
-		if ($nodes->length) return $this->redirect($nodes->item(0)->getAttribute('content'));
+		if ($nodes->length) return $this->redirect($nodes->item(0)->getAttribute('content'), 303);
 	}
 }
 
