@@ -1,5 +1,7 @@
 <?php
 
+namespace Conduit;
+
 class Helpers {
 	/**
 	 * Parse the HTTP Accept header
@@ -23,7 +25,9 @@ class Helpers {
 	 * @params string $header $_SERVER['HTTP_ACCEPT']
 	 * @return string|null
 	 */
-	function preferredFormat($formats = array(), $header) {
+	function preferredFormat($formats = array(), $header = null) {
+		if (!$header) $header = $_SERVER['HTTP_ACCEPT'];
+
 		$items = array_map(array(self, 'parseAcceptHeader'), array_filter(array_map('trim', explode(',', $header))));
 		if (!$items) return null;
 
